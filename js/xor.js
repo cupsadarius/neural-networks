@@ -1,4 +1,4 @@
-let nn = new NeuralNetwork(2, 4, 1);
+let nn = new NeuralNetwork(2, [3, 4, 3], 1);
 
 let training_data = [{
     inputs: [0, 0],
@@ -31,7 +31,8 @@ let random = (dataset) => {
 
 nn.setLearningRate(0.3);
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 100000; i++) {
   let data = random(training_data);
   nn.train(data.inputs, data.outputs);
 }
+console.log('done learning');
