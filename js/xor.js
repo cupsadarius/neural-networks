@@ -1,4 +1,4 @@
-let nn = new NeuralNetwork(2, [3, 4, 3], 1);
+let nn = new NeuralNetwork([2, 3, 4, 3, 1]);
 
 let training_data = [{
     inputs: [0, 0],
