@@ -17,31 +17,55 @@ let training_data = [
   }
 ];
 
-class XoR extends Individual {
+
+let data = [];
+for (let i = 0; i < 10; i++) {
+  data = data.concat(training_data);
+}
+
+class XoR extends Phenotype {
   constructor() {
     super(new NeuralNetwork([2,3,3,1]).setLearningRate(0.3).setActivationFunction(sigmoid));
   }
 
-  evolve(trainingSet, maxIterations, maxAllowedMistakes) {
-    let mistakes = -1;
-    for (let i = 0; i < maxIterations; i++) {
-      let data = random(training_data);
-      this.brain.train(data.inputs, data.outputs);
-    }
-    for (let i = 0; i < maxIterations / 2; i++) {
-      let data = random(training_data);
-      const output = this.brain.predict(data.inputs)[0];
-      if (Math.round(output) === data.outputs[0]) {
-        this.score++;
+  evaluate(context) {
+    let run = true;
+    let shouldBeFalse = 0;
+    let shouldBeTrue = 0;
+    let error = 0;
+    do {
+      const thought = random(context.data);
+      const result = this.think(thought.inputs);
+      const inputSum = thought.inputs[0] + thought.inputs[1];
+
+      if (Math.round(result[0]) === thought.outputs[0]) {
+        if (inputSum === 0 || inputSum === 2) {
+          shouldBeFalse += 1;
+        } else {
+          shouldBeTrue += 1;
+        }
+
+        error += Math.pow(result[0] - thought.outputs[0], 2);
       } else {
-        mistakes++;
+        run = false;
       }
-      if (mistakes === maxAllowedMistakes) {
-        this.die();
-        break;
-      }
-    }
+    } while (run);
+    const weight = shouldBeFalse && shouldBeTrue ? ((shouldBeFalse / shouldBeTrue) / (shouldBeFalse + shouldBeTrue)) : 0;
+    // console.log(this.generation, this.index, [shouldBeFalse, shouldBeTrue], weight, error);
+    
+    this.score = weight * error;
+    this.die();
+    return;
   }
 };
 
-const p = new Population(XoR, 500, 0.3, 0.1);
+const context = {
+  data
+};
+
+const p = new Population(XoR, 100, 0.2, 0.4, context);
+
+for (let i = 0; i < 100; i++) {
+  p.nextGeneration();
+}
+console.log('done evolving');
