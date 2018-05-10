@@ -1,4 +1,4 @@
-const phrase = 'I wanna be the very best, like noone ever was';
+const phrase = 'I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause...';
 
 class Guesser extends Agent {
   constructor(dna) {
@@ -35,7 +35,7 @@ class Guesser extends Agent {
   }
 }
 
-const p = new Population(Guesser, 500, 0.01, 0.4, {data: phrase})
+const p = new Population(Guesser, {data: phrase}, 500, 0.5, 0.01)
 
 while (true) {
   p.nextGeneration();

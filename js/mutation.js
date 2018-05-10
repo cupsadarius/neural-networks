@@ -25,7 +25,7 @@ for (let i = 0; i < 10; i++) {
 
 class XoR extends NeuralAgent {
   constructor(dna) {
-    super(dna || new NeuralNetwork([2,3,1]));
+    super(dna || new NeuralNetwork([2,1]));
   }
 
   evaluate(context) {
@@ -37,7 +37,6 @@ class XoR extends NeuralAgent {
       const thought = random(context.data);
       const result = this.think(thought.inputs);
       const inputSum = thought.inputs[0] + thought.inputs[1];
-
       if (Math.round(result[0]) === thought.outputs[0]) {
         if (inputSum === 0 || inputSum === 2) {
           shouldBeFalse += 1;
@@ -63,9 +62,10 @@ const context = {
   data
 };
 
-const p = new Population(XoR, context, 100, 0.2, 0.05, 0, 0);
+const p = new Population(XoR, context, 100, 0.5, 0.1, 0.1, 0.1);
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 1000; i++) {
   p.nextGeneration();
+  console.log(p.bestOverall.score, p.bestOverall.species);
 }
-console.log(p.bestOverall);
+console.log('done');
