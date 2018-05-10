@@ -25,7 +25,7 @@ for (let i = 0; i < 10; i++) {
 
 class XoR extends NeuralAgent {
   constructor(dna) {
-    super(dna || new NeuralNetwork([2,1]));
+    super(dna || new NeuralNetwork([2,3,1]));
   }
 
   evaluate(context) {
@@ -62,14 +62,15 @@ const context = {
   data
 };
 const structuralOptions = {
-  layerMutationRate: 0.01,
-  nodeMutationRate: 0.01,
-  maxHiddenLayers: 2,
-  maxNodesOnHiddenLayer: 3
+  layerMutationRate: 0.1,
+  nodeMutationRate: 0.1,
+  maxHiddenLayers: 4,
+  maxNodesOnHiddenLayer: 5
 };
-const p = new Population(XoR, context, 500, 0.5, 0.01, structuralOptions);
+const p = new Population(XoR, context, 100, 0.5, 0.1, structuralOptions);
 
-for (let i = 0; i < 1000; i++) {
+p.bestOverall = {score: 0};
+while (p.bestOverall.score < 20) {
   p.nextGeneration();
   console.log(p.bestOverall.score, p.bestOverall.species);
 }

@@ -18,11 +18,6 @@ let training_data = [
 ];
 
 
-let data = [];
-for (let i = 0; i < 10; i++) {
-  data = data.concat(training_data);
-}
-
 class XoR extends NeuralAgent {
   constructor(dna) {
     super(dna || new NeuralNetwork([2,3,1]));
@@ -60,12 +55,14 @@ class XoR extends NeuralAgent {
 };
 
 const context = {
-  data
+  data: training_data
 };
 
-const p = new Population(XoR, context, 100, 0.2, 0.05, 0, 0);
+const p = new Population(XoR, context, 500, 0.4, 0.1);
 
-for (let i = 0; i < 100; i++) {
+p.bestOverall = {score: 0};
+while (p.bestOverall.score < 20) {
   p.nextGeneration();
+  console.log(p.bestOverall.score, p.bestOverall.generation);
 }
-console.log(p.bestOverall);
+console.log('done');

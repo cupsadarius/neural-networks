@@ -1,4 +1,4 @@
-let nn = new NeuralNetwork([2, 3, 4, 3, 1]);
+let nn = new NeuralNetwork([2, 3, 1]);
 
 let training_data = [{
     inputs: [0, 0],
@@ -17,17 +17,6 @@ let training_data = [{
     outputs: [0]
   }
 ];
-
-let randomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-let random = (dataset) => {
-  let index = randomInt(0, dataset.length);
-  return dataset[index];
-} 
 
 nn.setLearningRate(0.3);
 
