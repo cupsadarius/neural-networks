@@ -23,9 +23,9 @@ for (let i = 0; i < 10; i++) {
   data = data.concat(training_data);
 }
 
-class XoR extends Phenotype {
-  constructor() {
-    super(new NeuralNetwork([2,3,3,1]).setLearningRate(0.3).setActivationFunction(sigmoid));
+class XoR extends NeuralAgent {
+  constructor(dna) {
+    super(dna || new NeuralNetwork([2,3,1]));
   }
 
   evaluate(context) {
@@ -63,9 +63,12 @@ const context = {
   data
 };
 
-const p = new Population(XoR, 100, 0.2, 0.4, context);
+const p = new Population(XoR, 100, 0.05, 0.2, context);
 
-for (let i = 0; i < 100; i++) {
-  p.nextGeneration();
+for (let epoch = 0; epoch < 50; epoch ++) {
+  for (let i = 0; i < 100; i++) {
+    p.nextGeneration();
+  }
+  console.log(`Evolved for ${epoch + 1} epochs.`);
+  console.log(p.bestOverall);
 }
-console.log('done evolving');
