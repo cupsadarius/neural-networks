@@ -61,8 +61,13 @@ class XoR extends NeuralAgent {
 const context = {
   data
 };
-
-const p = new Population(XoR, context, 100, 0.5, 0.1, 0.1, 0.1);
+const structuralOptions = {
+  layerMutationRate: 0.01,
+  nodeMutationRate: 0.01,
+  maxHiddenLayers: 2,
+  maxNodesOnHiddenLayer: 3
+};
+const p = new Population(XoR, context, 500, 0.5, 0.01, structuralOptions);
 
 for (let i = 0; i < 1000; i++) {
   p.nextGeneration();
