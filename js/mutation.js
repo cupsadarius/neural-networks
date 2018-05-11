@@ -1,58 +1,35 @@
-let training_data = [
-  {
-    inputs: [0, 0],
-    outputs: [0]
-  },
-  {
-    inputs: [0, 1],
-    outputs: [1]
-  },
-  {
-    inputs: [1, 0],
-    outputs: [1]
-  },
-  {
-    inputs: [1, 1],
-    outputs: [0]
-  }
-];
+let data = Array(10000);
+data = data.fill(0).map(() => {
+  const inputs = [];
+  inputs[0] = randomInt(0, 100);
+  inputs[1] = randomInt(0, 100);
+  inputs[2] = randomInt(0, 100);
+  const max = inputs.reduce((max, e) => e > max ? e : max, 0);
+  let outputs = [inputs.indexOf(max) === 0 ? -1 : inputs.indexOf(max) === 1 ? 0 : 1];
 
+  return {
+    inputs,
+    outputs
+  };
+});
 
-let data = [];
-for (let i = 0; i < 10; i++) {
-  data = data.concat(training_data);
-}
-
-class XoR extends NeuralAgent {
+class AvoidColision extends NeuralAgent {
   constructor(dna) {
-    super(dna || new NeuralNetwork([2,3,1]));
+    super(dna || new NeuralNetwork([3,1]).setActivationFunction(softsign));
   }
 
   evaluate(context) {
     let run = true;
-    let shouldBeFalse = 0;
-    let shouldBeTrue = 0;
-    let error = 0;
     do {
       const thought = random(context.data);
       const result = this.think(thought.inputs);
-      const inputSum = thought.inputs[0] + thought.inputs[1];
       if (Math.round(result[0]) === thought.outputs[0]) {
-        if (inputSum === 0 || inputSum === 2) {
-          shouldBeFalse += 1;
-        } else {
-          shouldBeTrue += 1;
-        }
-
-        error += Math.pow(result[0] - thought.outputs[0], 2);
+        this.score++;
       } else {
         run = false;
       }
     } while (run);
-    const weight = shouldBeFalse && shouldBeTrue ? ((shouldBeFalse / shouldBeTrue) / (shouldBeFalse + shouldBeTrue)) : 0;
-    // console.log(this.generation, this.index, [shouldBeFalse, shouldBeTrue], weight, error);
     
-    this.score = weight * error;
     this.die();
     return;
   }
@@ -62,16 +39,17 @@ const context = {
   data
 };
 const structuralOptions = {
-  layerMutationRate: 0.1,
-  nodeMutationRate: 0.1,
-  maxHiddenLayers: 4,
+  layerMutationRate: 0.05,
+  decreaseLayerRate: 0.01,
+  nodeMutationRate: 0.05,
+  maxHiddenLayers: 3,
   maxNodesOnHiddenLayer: 5
 };
-const p = new Population(XoR, context, 100, 0.5, 0.1, structuralOptions);
+const p = new Population(AvoidColision, context, 200, 0.5, 0.05, structuralOptions);
 
 p.bestOverall = {score: 0};
-while (p.bestOverall.score < 20) {
+while (p.bestOverall.score < 100) {
   p.nextGeneration();
   console.log(p.bestOverall.score, p.bestOverall.species);
 }
-console.log('done');
+console.log('done', p.bestOverall);
