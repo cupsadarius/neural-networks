@@ -1,0 +1,11 @@
+.stats, .all, .best {
+  font-family: "Courier";
+}
+
+.best {
+  font-size: 32px;
+}
+
+.stats {
+  font-size: 24px;
+}
