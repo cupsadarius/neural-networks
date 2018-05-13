@@ -21,8 +21,8 @@ const structuralOptions = {
   layerMutationRate: 0.05,
   decreaseLayerRate: 0.01,
   nodeMutationRate: 0.05,
-  maxHiddenLayers: 3,
-  maxNodesOnHiddenLayer: 7
+  maxHiddenLayers: 2,
+  maxNodesOnHiddenLayer: 5
 };
 
 let population;
@@ -33,7 +33,7 @@ const radius = 40;
 
 function setup() {
   createCanvas(width, height)
-  population = new Population(MaxFinder, context, 500, 0.5, 0.05, structuralOptions);
+  population = new Population(MaxFinder, context, 100, 0.5, 0.01, structuralOptions);
   p = createP();
 }
 
@@ -44,7 +44,7 @@ function draw() {
     noLoop();
     console.log('done');
   }
-  p.html(`Generation: ${population.getGeneration()}, Best Score: ${population.getBestOverall().score}`);
+  p.html(`Generation: ${population.getGeneration()}, Best Score: ${population.getBestOverall().score}, Average Score: ${population.getAverageScore()}`);
 
   textSize(32);
   fill(255);

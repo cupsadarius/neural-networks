@@ -1,6 +1,6 @@
 class MaxFinder extends NeuralAgent {
   constructor(dna) {
-    super(dna || new NeuralNetwork([3,1]).setActivationFunction(softsign));
+    super(dna || new NeuralNetwork([3,1]).setActivationFunction(tanh));
   }
 
   evaluate(context) {
