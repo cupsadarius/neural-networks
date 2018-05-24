@@ -1,6 +1,6 @@
 class XoR extends NeuralAgent {
   constructor(dna) {
-    super(dna || new NeuralNetwork([2,3,1]));
+    super(dna || new NeuralNetwork([2,3,1]).setLearningRate(0.3).setActivationFunction(softsign));
   }
 
   evaluate(context) {

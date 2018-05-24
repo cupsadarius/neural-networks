@@ -40,7 +40,7 @@ function draw() {
     noLoop();
     console.log('done');
   }
-  p.html(`Generation: ${population.getGeneration()}, Best Score: ${population.getBestOverall().score}`);
+  p.html(`Generation: ${population.getGeneration()}, Best Score: ${population.getBestOverall().score}, Average Score: ${population.getAverageScore()}`);
 
   textSize(32);
   fill(255);
