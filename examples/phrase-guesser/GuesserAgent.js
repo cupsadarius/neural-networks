@@ -1,13 +1,11 @@
 class Guesser extends Agent {
   constructor(dna) {
-    super(dna || Array(phrase.length).fill(randomInt(0, 255)));
+    super(dna || Array(phrase.length).fill(0).map(() => randomInt(0, 255)));
   }
 
   evaluate({data}) {
     for (let index in this.dna) {
-      if (String.fromCharCode(this.dna[index]) === data[index]) {
-        this.score += 1;
-      }
+      this.score += String.fromCharCode(this.dna[index]) === data[index] ? 1 :  0;     
     }
 
     this.die();
@@ -15,7 +13,7 @@ class Guesser extends Agent {
 
   mutate({rate}) {
     for (let index in this.dna) {
-      if (gaussianRandom() < rate) {
+      if (Math.random() < rate) {
         this.dna[index] = randomInt(0,255);
       }
     }

@@ -27,7 +27,7 @@ createCanvas(width, height)
 network = new NeuralNetwork([3, 3, 1]);
 
 network.setLearningRate(0.01);
-network.setActivationFunction(softsign);
+network.setActivationFunction(activation.SIGMOID);
 
 p = createP();
 }

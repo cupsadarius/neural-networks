@@ -5,7 +5,6 @@ let stats;
 
 const phrase = 'To be or not to be, this is the question.';
 
-
 const options = {
   context: {
     data: phrase
@@ -29,7 +28,9 @@ const display = () => {
   let statstext = "total generations:     " + population.getGeneration() + "<br>";
   statstext += "average fitness:       " + Math.floor(population.getAverageScore() * 100 / phrase.length) + "%<br>";
   statstext += "total population:      " + population.getSize() + "<br>";
-  statstext += "mutation rate:         " + floor(options.mutationRate * 100) + "%";
+  statstext += "mutation rate:         " + floor(options.mutation.rate * 100) + "%<br>";
+  statstext += "crossover rate:         " + floor(options.crossover.rate * 100) + "%<br>";
+  statstext += "elitism:         " + floor(options.elitism * 100) + "%";
 
   stats.html(statstext); 
 
@@ -53,7 +54,7 @@ function setup() {
 
 function draw() {
   population.nextGeneration();
-  if (population.bestOverall.score === phrase.length) {
+  if (population.getBest().score === phrase.length) {
     noLoop();
   }
 

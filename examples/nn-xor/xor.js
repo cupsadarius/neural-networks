@@ -29,6 +29,7 @@ function setup() {
   network = new NeuralNetwork([2, 3, 1]);
   
   network.setLearningRate(0.3);
+  network.setActivationFunction(activation.TANH);
 
   p = createP();
 }
