@@ -27,10 +27,10 @@ const options = {
   context: {
     data: training_data
   },
-  size: 2,
+  size: 100,
   mutation: {
     rate: 0.01,
-    allowed: mutation.ALL,
+    allowed: mutation.FFW,
   },
   crossover: {
     rate: 0.5,
