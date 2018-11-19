@@ -28,7 +28,7 @@ const options = {
   size: 10,
   mutation: {
     rate: 0.01,
-    allowed: mutation.FFW,
+    allowed: mutation.ALL,
     options: {
       maxHiddenLayers: 3,
       maxNodesOnHiddenLayer: 5,

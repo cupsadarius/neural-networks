@@ -1,6 +1,7 @@
 class Guesser extends Agent {
   constructor(dna) {
     super(dna || Array(phrase.length).fill(0).map(() => randomInt(0, 255)));
+    this.species = 'guesser';
   }
 
   evaluate({data}) {
@@ -14,7 +15,7 @@ class Guesser extends Agent {
   mutate({rate}) {
     for (let index in this.dna) {
       if (Math.random() < rate) {
-        this.dna[index] = randomInt(0,255);
+        this.dna[index] = randomInt(0, 255);
       }
     }
 

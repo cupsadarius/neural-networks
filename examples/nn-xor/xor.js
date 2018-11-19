@@ -17,7 +17,7 @@ let training_data = [{
 ];
 
 
-let network;
+let network, agent;
 const width = 600;
 const height = 600;
 const radius = 40;
@@ -30,7 +30,6 @@ function setup() {
   
   network.setLearningRate(0.3);
   network.setActivationFunction(activation.TANH);
-
   p = createP();
 }
 
